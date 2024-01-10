@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <title>Title</title>
+</head>
+<body>
+		<?php
+
+		// servername => localhost
+		// username => root
+		// password => empty
+		// database name => myDB
+		$conn = mysqli_connect("localhost", "root", "", "myDB");
+
+		// Check connection
+		if($conn === false){
+			die("ERROR: Could not connect. "
+				. mysqli_connect_error());
+		}
+        //
+
+
+
+		$id = $_REQUEST['id'];
+
+		$Q1_Mark = $_REQUEST['Q1_Mark'];
+		$Q2_Mark = $_REQUEST['Q2_Mark'];
+        $Q1_Mark = (float)$Q1_Mark;
+        $Q2_Mark = (float)$Q2_Mark;
+        $Q_Mark = ($Q1_Mark + $Q2_Mark)/2;
+
+
+
+		$sql = "INSERT INTO Students VALUES ('$id', '$Q_Mark')";
+
+		if(mysqli_query($conn, $sql)){
+			echo "<h3>data stored in a database successfully."
+				. "</h3>";
+
+			echo nl2br("\n$id\n $Q1_Mark\n " . "$Q2_Mark");
+		} else{
+			echo "ERROR: Hush! Sorry $sql. "
+				. mysqli_error($conn);
+		}
+
+            mysqli_close($conn);
+
+		?>
+
+</body>
+</html>
+
+// Additional file
+
+////////////////////////////////////
+
+
+///////////////////////////////////
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>online</title>
+</head>
+
+<body>
+	<center>
+		<h1>Storing data in Database</h1>
+
+		<form action="online_db_conn.php" method="post">
+
+
+<p>
+				<label for="id">ID:</label>
+				<input type="text" name="id" id="id">
+			</p>
+
+
+
+
+
+<p>
+				<label for="Q1_Mark">Attendance Mark:</label>
+				<input type="text" name="Q1_Mark" id="Q1_Mark">
+			</p>
+
+
+
+
+
+<p>
+				<label for="Q2_Mark">Quiz Mark:</label>
+				<input type="text" name="Q2_Mark" id="Q2_Mark">
+			</p>
+
+
+
+
+
+
+
+
+			<input type="submit" value="Submit">
+		</form>
+	</center>
+</body>
+
+</html>
